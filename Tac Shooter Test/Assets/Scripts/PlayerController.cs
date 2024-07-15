@@ -41,6 +41,16 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
                 activeGun?.Shoot();
         }
+
+        //Kicking
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            print("G Pressed");
+            if (Physics.Raycast(transform.position, transform.right, 1, LayerMask.NameToLayer("Doors")))
+            {
+                print("Hit Door");
+            }
+        }
     }
     public void TakeDamage(float damage)
     {

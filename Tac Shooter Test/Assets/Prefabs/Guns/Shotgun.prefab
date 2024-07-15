@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7853054044189575413}
   - component: {fileID: 7853054044189575412}
   - component: {fileID: 7853054044189575419}
-  - component: {fileID: 8847793884418267508}
+  - component: {fileID: -485830684797161328}
   m_Layer: 7
   m_Name: Shotgun
   m_TagString: Untagged
@@ -113,7 +113,7 @@ MonoBehaviour:
   shotsFired: 12
   noise: 20
   attachments: []
---- !u!61 &8847793884418267508
+--- !u!61 &-485830684797161328
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

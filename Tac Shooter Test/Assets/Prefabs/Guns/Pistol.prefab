@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7939550231542751350}
   - component: {fileID: 7939550231542751351}
   - component: {fileID: 7939550231542751352}
-  - component: {fileID: -8715210255258215724}
+  - component: {fileID: 5397868926003334846}
   m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
@@ -144,7 +144,7 @@ MonoBehaviour:
   shotsFired: 1
   noise: 5
   attachments: []
---- !u!61 &-8715210255258215724
+--- !u!61 &5397868926003334846
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,7 +154,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

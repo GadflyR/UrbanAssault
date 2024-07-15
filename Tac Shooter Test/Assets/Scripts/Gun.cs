@@ -29,6 +29,8 @@ public class Gun : MonoBehaviour
 
     public float noise;
 
+    private bool canShoot;
+
     public List<Attachment> attachments = new List<Attachment>();
 
     private void Start()
@@ -79,7 +81,7 @@ public class Gun : MonoBehaviour
         if (isShotgun && ammo >= 0)
             CancelReload();
         //Check if you can shoot
-        if (cooldown <= 0 && !isReloading && ammo > 0)
+        if (cooldown <= 0 && !isReloading && ammo > 0 && canShoot)
         {
             for (int i = 0; i < shotsFired; i++)
             {
@@ -130,5 +132,15 @@ public class Gun : MonoBehaviour
     {
         StopAllCoroutines();
         isReloading = false;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+            canShoot = false;
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+            canShoot = true;
     }
 }
