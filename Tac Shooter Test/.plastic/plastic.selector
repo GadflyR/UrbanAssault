@@ -1,0 +1,4 @@
+repository "Tac Shooter Test@Technically_A_Game_Studio_Studio@cloud"
+  path "/"
+    br "/main"
+    co "/main"
