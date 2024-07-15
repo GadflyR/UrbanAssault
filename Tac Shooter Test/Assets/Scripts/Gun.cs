@@ -14,7 +14,9 @@ public class Gun : MonoBehaviour
     public float firerate;
 
     private int ammo;
-    public int maxAmmo;
+    public int magAmmo;
+    public int remainingAmmo;
+
     public float reloadTime;
     private bool isReloading;
 
@@ -39,7 +41,7 @@ public class Gun : MonoBehaviour
             bulletSpeed += attachment.bulletSpeedModifier;
             damage += attachment.damageModifier;
             firerate += attachment.firerateModifier;
-            maxAmmo += attachment.ammoModifier;
+            magAmmo += attachment.ammoModifier;
             reloadTime += attachment.reloadTimeModifier;
             spread += attachment.spreadModifier;
             noise += attachment.noiseModifier;
@@ -48,27 +50,28 @@ public class Gun : MonoBehaviour
         bulletSpeed = Mathf.Clamp(bulletSpeed, 1, Mathf.Infinity);
         damage = Mathf.Clamp(damage, 1, Mathf.Infinity);
         firerate = Mathf.Clamp(firerate, Mathf.Epsilon, Mathf.Infinity);
-        maxAmmo = (int)Mathf.Clamp(maxAmmo, 1, Mathf.Infinity);
+        magAmmo = (int)Mathf.Clamp(magAmmo, 1, Mathf.Infinity);
         reloadTime = Mathf.Clamp(reloadTime, Mathf.Epsilon, Mathf.Infinity);
         spread = Mathf.Clamp(spread, 0, Mathf.Infinity);
         noise = Mathf.Clamp(noise, 0, Mathf.Infinity);
 
         //Initialize cooldown & ammo
         cooldown = firerate;
-        ammo = maxAmmo;
+        ammo = magAmmo;
+        remainingAmmo = magAmmo * 5;
     }
     private void Update()
     {
         //Reloading
-        if (((Input.GetKeyDown(KeyCode.R) && ammo < maxAmmo) || ammo <= 0) && !isReloading)
+        if (((Input.GetKeyDown(KeyCode.R) && ammo < magAmmo) || ammo <= 0) && !isReloading && remainingAmmo > 0)
             StartCoroutine(Reload());
         cooldown -= Time.deltaTime;
 
         //Update ammo UI
         if (isReloading && !isShotgun)
-            UIManager.instance.ammoText.text = $"X | {maxAmmo}";
+            UIManager.instance.ammoText.text = $"X | {remainingAmmo}";
         else
-            UIManager.instance.ammoText.text = $"{ammo} | {maxAmmo}";
+            UIManager.instance.ammoText.text = $"{ammo} | {remainingAmmo}";
     }
     public void Shoot()
     {
@@ -76,7 +79,7 @@ public class Gun : MonoBehaviour
         if (isShotgun && ammo >= 0)
             CancelReload();
         //Check if you can shoot
-        if (cooldown <= 0 && !isReloading)
+        if (cooldown <= 0 && !isReloading && ammo > 0)
         {
             for (int i = 0; i < shotsFired; i++)
             {
@@ -101,7 +104,8 @@ public class Gun : MonoBehaviour
         {
             yield return new WaitForSeconds(reloadTime);
             ammo++;
-            if (ammo < maxAmmo)
+            remainingAmmo--;
+            if (ammo < magAmmo && remainingAmmo > 0)
                 StartCoroutine(Reload());
             else
                 isReloading = false;
@@ -110,7 +114,16 @@ public class Gun : MonoBehaviour
         {
             yield return new WaitForSeconds(reloadTime);
             isReloading = false;
-            ammo = maxAmmo;
+            if (remainingAmmo >= magAmmo)
+            {
+                remainingAmmo -= (magAmmo - ammo);
+                ammo = magAmmo; 
+            }
+            else
+            {
+                ammo = remainingAmmo;
+                remainingAmmo = 0;
+            }
         }
     }
     public void CancelReload()

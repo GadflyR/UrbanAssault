@@ -104,7 +104,8 @@ MonoBehaviour:
   bulletSpeed: 45
   damage: 10
   firerate: 0.1
-  maxAmmo: 30
+  magAmmo: 30
+  remainingAmmo: 0
   reloadTime: 1.5
   spread: 5
   isAutomatic: 1

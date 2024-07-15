@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed;
 
+    public float health = 100;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,5 +41,9 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
                 activeGun?.Shoot();
         }
+    }
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
     }
 }
