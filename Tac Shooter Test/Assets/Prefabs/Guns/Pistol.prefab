@@ -144,6 +144,8 @@ MonoBehaviour:
   shotsFired: 1
   noise: 5
   attachments: []
+  shootSFX: {fileID: 8300000, guid: 8f074069d5433fd419a40355394173fe, type: 3}
+  reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
 --- !u!61 &5397868926003334846
 BoxCollider2D:
   m_ObjectHideFlags: 0

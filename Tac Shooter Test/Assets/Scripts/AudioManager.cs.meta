@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a2ada50ef83de2242b7152e727e02578
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - shootSFX: {fileID: 8300000, guid: 8f074069d5433fd419a40355394173fe, type: 3}
+  - reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
+  - kickDoorSFX: {fileID: 8300000, guid: 8cc48275134568d4a864c72b2650390c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

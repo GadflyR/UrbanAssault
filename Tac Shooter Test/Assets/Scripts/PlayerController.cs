@@ -11,10 +11,15 @@ public class PlayerController : MonoBehaviour
 
     public float health = 100;
 
+    private List<Gun> guns = new List<Gun>();
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         Cursor.lockState = CursorLockMode.Confined;
+
+        guns.AddRange(GetComponentsInChildren<Gun>(true));
+        SwapGun(0);
     }
     private void Update()
     {
@@ -29,28 +34,35 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
             moveSpeed *= 2;
 
-        //Shooting
-        Gun activeGun = GetComponentInChildren<Gun>();
+        Gun activeGun = guns.Find(gun => gun.isActiveAndEnabled);
         if (activeGun.isAutomatic)
         {
             if (Input.GetMouseButton(0))
-                activeGun?.Shoot();
+                activeGun.Shoot();
         }
         else
         {
             if (Input.GetMouseButtonDown(0))
-                activeGun?.Shoot();
+                activeGun.Shoot();
         }
+
+        //Swap Guns
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SwapGun(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            SwapGun(1);
 
         //Kicking
         if (Input.GetKeyDown(KeyCode.G))
         {
-            print("G Pressed");
-            if (Physics.Raycast(transform.position, transform.right, 1, LayerMask.NameToLayer("Doors")))
-            {
-                print("Hit Door");
-            }
+            //Kick Door here
         }
+    }
+    public void SwapGun(int index)
+    {
+        foreach (Gun gun in guns)
+            gun.gameObject.SetActive(false);
+        guns[index].gameObject.SetActive(true);
     }
     public void TakeDamage(float damage)
     {

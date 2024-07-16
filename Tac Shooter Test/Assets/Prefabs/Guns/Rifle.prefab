@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bc8fe5ccb7b154894bae5b7a34b61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2477751650605399963, guid: 9fa2b955f8dc7624fa591a247b2cc121, type: 3}
+  bulletPrefab: {fileID: 5342191919766992949, guid: 877ce21ed23aaa849b5e91dc66d1b83a, type: 3}
   barrelOutPoint: {fileID: 5574597979477398352}
   bulletSpeed: 45
   damage: 10
@@ -113,6 +113,8 @@ MonoBehaviour:
   shotsFired: 1
   noise: 10
   attachments: []
+  shootSFX: {fileID: 8300000, guid: 8f074069d5433fd419a40355394173fe, type: 3}
+  reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
 --- !u!61 &7702815802289122252
 BoxCollider2D:
   m_ObjectHideFlags: 0
