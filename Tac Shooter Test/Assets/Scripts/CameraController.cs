@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     private const float zOffset = -10;
     public float maxDistance = 10;
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         GameObject player = FindObjectOfType<PlayerController>().gameObject;
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
