@@ -28,13 +28,14 @@ public class Gun : MonoBehaviour
     public int shotsFired;
 
     public float noise;
-
-    private bool canShoot = true;
+    private bool isSilenced;
 
     public List<Attachment> attachments = new List<Attachment>();
 
     public AudioClip shootSFX;
+    public AudioClip silencedShootSFX;
     public AudioClip reloadSFX;
+    public AudioClip switchSFX;
 
     private void Start()
     { 
@@ -43,6 +44,9 @@ public class Gun : MonoBehaviour
         //Apply attachment modifiers
         foreach (Attachment attachment in attachments)
         {
+            if (attachment.noiseModifier < 0)
+                isSilenced = true;
+
             bulletSpeed += attachment.bulletSpeedModifier;
             damage += attachment.damageModifier;
             firerate += attachment.firerateModifier;
@@ -81,10 +85,10 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
         //Cancel Reload if you're using a shotgun
-        if (isShotgun && ammo >= 0)
+        if (isShotgun && ammo >= 0 && isReloading)
             CancelReload();
         //Check if you can shoot
-        if (cooldown <= 0 && !isReloading && ammo > 0 && canShoot)
+        if (cooldown <= 0 && !isReloading && ammo > 0)
         {
             for (int i = 0; i < shotsFired; i++)
             {
@@ -93,7 +97,7 @@ public class Gun : MonoBehaviour
                 Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
                 bulletRB.velocity = (Vector2)barrelOutPoint.right * bulletSpeed + GenerateRandomSpread();
             }
-            AudioManager.instance.PlaySFX(shootSFX, noise / 25);
+            AudioManager.instance.PlaySFX(isSilenced ? silencedShootSFX : shootSFX, 1);
             cooldown = firerate;
             ammo--;
         }
@@ -139,8 +143,22 @@ public class Gun : MonoBehaviour
         AudioManager.instance.StopPlaying();
         isReloading = false;
     }
+    private void OnEnable()
+    {
+        StartCoroutine(WaitForAudioManager());
+    }
+
+    private IEnumerator WaitForAudioManager()
+    {
+        while (AudioManager.instance == null)
+        {
+            yield return null; // Wait until the AudioManager instance is ready
+        }
+        AudioManager.instance.PlaySFX(switchSFX, 1);
+    }
     private void OnDisable()
     {
-        CancelReload();
+        if (transform.parent.TryGetComponent(out PlayerController player))
+            CancelReload();
     }
 }

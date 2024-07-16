@@ -10,22 +10,21 @@ public class Enemy : MonoBehaviour
 
     public float health;
 
-    //AI Variables
+    private float angerLevel;
+
     public Transform currentTarget;
     public float nextWaypointDistance = 3;
     private Path path;
     private int currentWaypoint;
-    private bool reachedEndOfPath = false;
+    private bool reachedEndOfPath;
 
     private Seeker seeker;
     private Rigidbody2D rb;
 
-    //State the enemy is in. 0 = Idle, 1 = Patrolling, 2 = Chasing the Player
     private int state;
     public Transform[] patrolCheckpoints;
     private int currentPatrolCheckpoint;
 
-    //Gun
     private Gun gun;
 
     private void Start()
@@ -34,27 +33,56 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         gun = GetComponentInChildren<Gun>();
 
-        if (patrolCheckpoints.Length == 0)
-            state = 0;
-        else
-            state = 1;
+        if (seeker == null)
+        {
+            Debug.LogError("Seeker component not found!");
+        }
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D component not found!");
+        }
+        if (gun == null)
+        {
+            Debug.LogError("Gun component not found!");
+        }
 
         InvokeRepeating("UpdatePath", 0, 0.5f);
     }
+
     private void Update()
     {
-        //Looking at the target
-        float AngleRad = Mathf.Atan2(currentTarget.position.y - transform.position.y, currentTarget.position.x - transform.position.x);
-        float AngleDeg = Mathf.Rad2Deg * AngleRad;
-        transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+        if (currentTarget == null)
+        {
+            Debug.LogError("Current target is not set!");
+            return;
+        }
 
-        //State Handling
+        if (angerLevel >= 2.5f)
+            state = 2;
+        else
+        {
+            if (patrolCheckpoints.Length == 0)
+                state = 0;
+            else
+                state = 1;
+        }
+        angerLevel = Mathf.Clamp(angerLevel, 0, 10);
+
         if (state == 0)
             currentTarget = transform;
         else if (state == 1)
         {
             currentSpeed = 100;
             currentTarget = patrolCheckpoints[currentPatrolCheckpoint];
+
+            if (path != null && currentWaypoint < path.vectorPath.Count)
+            {
+                float AngleRad = Mathf.Atan2(path.vectorPath[currentWaypoint].y - transform.position.y,
+                    path.vectorPath[currentWaypoint].x - transform.position.x);
+                float AngleDeg = Mathf.Rad2Deg * AngleRad;
+                transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+            }
+
             float distance = Vector2.Distance(rb.position, currentTarget.position);
             if (distance <= nextWaypointDistance)
             {
@@ -67,13 +95,27 @@ public class Enemy : MonoBehaviour
         {
             currentSpeed = maxSpeed;
             currentTarget = FindObjectOfType<PlayerController>().transform;
+
+            float AngleRad = Mathf.Atan2(currentTarget.position.y - transform.position.y, currentTarget.position.x - transform.position.x);
+            float AngleDeg = Mathf.Rad2Deg * AngleRad;
+            transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+
             if (Vector2.Distance(transform.position, currentTarget.position) <= 10)
             {
                 gun.Shoot();
                 rb.velocity = Vector2.zero;
             }
         }
+        else if (state == 3)
+        {
+            rb.velocity = Vector2.zero;
+            currentTarget = FindObjectOfType<PlayerController>().transform;
+            float AngleRad = Mathf.Atan2(currentTarget.position.y - transform.position.y, currentTarget.position.x - transform.position.x);
+            float AngleDeg = Mathf.Rad2Deg * AngleRad;
+            transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+        }
     }
+
     private void FixedUpdate()
     {
         if (path == null)
@@ -97,11 +139,13 @@ public class Enemy : MonoBehaviour
         if (distance < nextWaypointDistance)
             currentWaypoint++;
     }
+
     public void UpdatePath()
     {
-        if (seeker.IsDone())
+        if (seeker != null && seeker.IsDone() && currentTarget != null)
             seeker.StartPath(rb.position, currentTarget.position, OnPathComplete);
     }
+
     public void OnPathComplete(Path _path)
     {
         if (!_path.error)
@@ -110,10 +154,11 @@ public class Enemy : MonoBehaviour
             currentWaypoint = 0;
         }
     }
+
     public void TakeDamage(float damage)
     {
         health -= damage;
-        state = 2;
+        angerLevel = 10;
         if (health <= 0)
             Destroy(gameObject);
     }

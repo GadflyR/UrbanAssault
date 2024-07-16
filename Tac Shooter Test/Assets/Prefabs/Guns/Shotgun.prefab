@@ -102,7 +102,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2477751650605399963, guid: 9fa2b955f8dc7624fa591a247b2cc121, type: 3}
   barrelOutPoint: {fileID: 7853054044759704503}
   bulletSpeed: 50
-  damage: 5
+  damage: 10
   firerate: 0.8
   magAmmo: 8
   remainingAmmo: 0
@@ -113,8 +113,10 @@ MonoBehaviour:
   shotsFired: 12
   noise: 20
   attachments: []
-  shootSFX: {fileID: 8300000, guid: 8f074069d5433fd419a40355394173fe, type: 3}
-  reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
+  shootSFX: {fileID: 8300000, guid: 555c0587a30de8d409c10b7f202d70b7, type: 3}
+  silencedShootSFX: {fileID: 8300000, guid: 555c0587a30de8d409c10b7f202d70b7, type: 3}
+  reloadSFX: {fileID: 8300000, guid: 35d57ed238d0b0a48a464982e19ea621, type: 3}
+  switchSFX: {fileID: 8300000, guid: e653dd90da677604f8019232fde0d23c, type: 3}
 --- !u!61 &-485830684797161328
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -113,8 +113,10 @@ MonoBehaviour:
   shotsFired: 1
   noise: 10
   attachments: []
-  shootSFX: {fileID: 8300000, guid: 8f074069d5433fd419a40355394173fe, type: 3}
+  shootSFX: {fileID: 8300000, guid: 6751ded0bc0ad3a4f93dcacc05ff357b, type: 3}
+  silencedShootSFX: {fileID: 8300000, guid: f2516c2197909b34e85da538722db812, type: 3}
   reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
+  switchSFX: {fileID: 8300000, guid: 1dbe4063bdb55724e9fa0378c70e3926, type: 3}
 --- !u!61 &7702815802289122252
 BoxCollider2D:
   m_ObjectHideFlags: 0

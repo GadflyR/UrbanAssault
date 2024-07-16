@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
 
     public float health = 100;
+    public HealthBarController healthBar;
 
     private List<Gun> guns = new List<Gun>();
 
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
         guns.AddRange(GetComponentsInChildren<Gun>(true));
         SwapGun(0);
+
+        healthBar.SetHealth(health);
     }
     private void Update()
     {
@@ -67,5 +70,6 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.SetHealth(health);
     }
 }

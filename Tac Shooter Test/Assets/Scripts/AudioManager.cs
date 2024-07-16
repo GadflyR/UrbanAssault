@@ -10,25 +10,32 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        // 确保单例模式的唯一性
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // 如果希望在场景切换时保留该对象
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
+            Debug.LogWarning("Duplicate AudioManager instance destroyed.");
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        // 获取 AudioSource 组件
+        InitializeAudioSource();
+    }
+
+    void OnEnable()
+    {
+        InitializeAudioSource();
+    }
+
+    void InitializeAudioSource()
+    {
         source = GetComponent<AudioSource>();
 
-        // 检查是否成功获取
         if (source == null)
         {
             Debug.LogError("AudioSource component not found on AudioManager!");
@@ -37,18 +44,25 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(AudioClip sound, float volume)
     {
-        // 检查 sound 和 source 是否有效
         if (sound != null && source != null)
         {
             source.PlayOneShot(sound, volume);
         }
         else
         {
-            Debug.LogError("AudioClip or AudioSource is missing!");
+            Debug.LogError($"AudioClip or AudioSource is missing! AudioClip: {(sound == null ? "null" : sound.name)}, AudioSource: {(source == null ? "null" : "exists")}");
         }
     }
+
     public void StopPlaying()
     {
-        source.Stop();
+        if (source != null)
+        {
+            source.Stop();
+        }
+        else
+        {
+            Debug.LogError("AudioSource component is missing or destroyed!");
+        }
     }
 }
