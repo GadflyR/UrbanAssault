@@ -13,8 +13,6 @@ public class LookAtMouse : MonoBehaviour
         float AngleDeg = Mathf.Rad2Deg * AngleRad;
         transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
 
-
-
         // DONT TOUCH (FOV script)
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);

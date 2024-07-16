@@ -79,6 +79,5 @@ public class FieldOfView : MonoBehaviour
     public void SetAimDirection(Vector3 aimDirection)
     {
         startingAngle = UtilsClass.GetAngleFromVectorFloat(aimDirection) + fov / 2f;
-        print(startingAngle);
     }
 }

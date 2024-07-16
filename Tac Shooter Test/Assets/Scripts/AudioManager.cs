@@ -47,4 +47,8 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("AudioClip or AudioSource is missing!");
         }
     }
+    public void StopPlaying()
+    {
+        source.Stop();
+    }
 }

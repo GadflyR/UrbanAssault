@@ -33,7 +33,6 @@ public class Gun : MonoBehaviour
 
     public List<Attachment> attachments = new List<Attachment>();
 
-    private AudioManager audioM;
     public AudioClip shootSFX;
     public AudioClip reloadSFX;
 
@@ -65,8 +64,6 @@ public class Gun : MonoBehaviour
         cooldown = firerate;
         ammo = magAmmo;
         remainingAmmo = magAmmo * 5;
-
-        audioM = AudioManager.instance;
     }
     private void Update()
     {
@@ -96,7 +93,7 @@ public class Gun : MonoBehaviour
                 Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
                 bulletRB.velocity = (Vector2)barrelOutPoint.right * bulletSpeed + GenerateRandomSpread();
             }
-            audioM.PlaySFX(shootSFX, noise / 25);
+            AudioManager.instance.PlaySFX(shootSFX, noise / 25);
             cooldown = firerate;
             ammo--;
         }
@@ -109,7 +106,7 @@ public class Gun : MonoBehaviour
     public IEnumerator Reload()
     {
         isReloading = true;
-        audioM.PlaySFX(reloadSFX, 1);
+        AudioManager.instance.PlaySFX(reloadSFX, 1);
         if (isShotgun)
         {
             yield return new WaitForSeconds(reloadTime);
@@ -139,18 +136,11 @@ public class Gun : MonoBehaviour
     public void CancelReload()
     {
         StopAllCoroutines();
+        AudioManager.instance.StopPlaying();
         isReloading = false;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnDisable()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
-            canShoot = false;
-        //gameObject.SetActive(false);
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
-            canShoot = true;
-        //gameObject.SetActive(false);
+        CancelReload();
     }
 }
