@@ -48,6 +48,7 @@ public class Gun : MonoBehaviour
     public AudioClip silencedShootSFX;
     public AudioClip reloadSFX;
     public AudioClip switchSFX;
+    public AudioClip outOfAmmoSFX;
 
     public Animator anim;
     private void Start()
@@ -102,11 +103,13 @@ public class Gun : MonoBehaviour
         cooldown -= Time.deltaTime;
 
         //Update ammo UI
-        if (isReloading && !isShotgun)
-            UIManager.instance.ammoText.text = $"X | {remainingAmmo}";
-        else
-            UIManager.instance.ammoText.text = $"{ammo} | {remainingAmmo}";
-        
+        if (UIManager.instance != null)
+        {
+            if (isReloading && !isShotgun)
+                UIManager.instance.ammoText.text = $"X | {remainingAmmo}";
+            else
+                UIManager.instance.ammoText.text = $"{ammo} | {remainingAmmo}";
+        }
     }
     public void Shoot()
     {
@@ -133,6 +136,8 @@ public class Gun : MonoBehaviour
             cooldown = firerate;
             ammo--;
         }
+        else if (ammo <= 0)
+            AudioManager.instance.PlaySFX(outOfAmmoSFX, 1);
     }
     public Vector2 GenerateRandomSpread()
     {
@@ -142,7 +147,7 @@ public class Gun : MonoBehaviour
     public IEnumerator Reload()
     {
         isReloading = true;
-        
+
         AudioManager.instance.PlaySFX(reloadSFX, 1);
         if (isShotgun)
         {
@@ -158,14 +163,14 @@ public class Gun : MonoBehaviour
         {
             yield return new WaitForSeconds(reloadTime);
             isReloading = false;
-            if (remainingAmmo >= magAmmo)
+            if (remainingAmmo >= magAmmo || ammo + remainingAmmo > magAmmo)
             {
                 remainingAmmo -= (magAmmo - ammo);
-                ammo = magAmmo; 
+                ammo = magAmmo;
             }
             else
             {
-                ammo = remainingAmmo;
+                ammo += remainingAmmo;
                 remainingAmmo = 0;
             }
         }

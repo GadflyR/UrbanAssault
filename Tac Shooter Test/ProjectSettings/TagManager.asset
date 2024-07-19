@@ -6,6 +6,9 @@ TagManager:
   tags:
   - AudioManager
   - Panel
+  - Restart
+  - Enemy
+  - VictoryPanel
   layers:
   - Default
   - TransparentFX

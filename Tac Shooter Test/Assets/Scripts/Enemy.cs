@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     private float angerLevel;
     public float angerThreshold = 1.5f;
 
-    //AI Handling
+    // AI Handling
     public Transform currentTarget;
     public float nextWaypointDistance = 0.5f;
     private Path path;
@@ -23,18 +23,18 @@ public class Enemy : MonoBehaviour
     private Seeker seeker;
     private Rigidbody2D rb;
 
-    //Field of View stuff
+    // Field of View stuff
     public GameObject fovPrefab;
     private FieldOfView fov;
     public float viewAngle;
     public float viewDistance;
 
-    //States
+    // States
     public int state;
     public Transform[] patrolCheckpoints;
     private int currentPatrolCheckpoint;
 
-    //Starting stuff for idle enemies
+    // Starting stuff for idle enemies
     private Transform startTransform;
     public GameObject transformHolder;
 
@@ -98,6 +98,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (player == null)
+        {
+            // 玩家对象已被销毁，停止执行后续代码
+            return;
+        }
+
         fov.SetOrigin(transform.position);
         fov.SetAimDirection(transform.right);
 
@@ -115,7 +121,7 @@ public class Enemy : MonoBehaviour
 
         if (angerLevel > 0 && angerLevel < angerThreshold)
         {
-            if (state != 3)
+            if (state != 3 && CanSeePlayer())
                 source.PlayOneShot(confusedVoiceLines[Random.Range(0, confusedVoiceLines.Length)], 1);
             state = 3;
         }
@@ -130,7 +136,7 @@ public class Enemy : MonoBehaviour
         }
         else if (state != 4 && state != 5)
         {
-            if (state != 0 && state != 1)
+            if (state != 0 && state != 1 && !CanSeePlayer())
                 source.PlayOneShot(lostSightVoiceLines[Random.Range(0, lostSightVoiceLines.Length)], 1);
             if (patrolCheckpoints.Length == 0)
                 state = 0;
@@ -139,7 +145,7 @@ public class Enemy : MonoBehaviour
         }
         angerLevel = Mathf.Clamp(angerLevel, 0, 10);
 
-        //Footsteps
+        // Footsteps
         if (currentSpeed != 0)
             footstepInterval = 1 / (currentSpeed / 100);
         footstepCooldown -= Time.deltaTime;
@@ -149,7 +155,7 @@ public class Enemy : MonoBehaviour
             footstepCooldown = footstepInterval;
         }
 
-        //State Handling
+        // State Handling
         if (state == 0)
         {
             currentSpeed = 0;
@@ -185,17 +191,14 @@ public class Enemy : MonoBehaviour
             if (CanSeePlayer())
             {
                 RaycastHit2D hit = Physics2D.Linecast(transform.position, player.transform.position);
-                if (hit.transform != null)
+                if (hit.transform != null && hit.transform == player.transform)
                 {
-                    if (hit.transform.TryGetComponent(out PlayerController player))
+                    if (!gun.isReloading)
                     {
-                        if (!gun.isReloading)
-                        {
-                            otherAnim = true;
-                            anim.Play("EnemyShoot");
-                            gun.Shoot();
-                            currentSpeed = 0;
-                        }
+                        otherAnim = true;
+                        anim.Play("EnemyShoot");
+                        gun.Shoot();
+                        currentSpeed = 0;
                     }
                 }
             }
@@ -233,7 +236,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        //Animations
+        // Animations
         clipInfo = anim.GetCurrentAnimatorClipInfo(0);
 
         if (gun.isReloading)
@@ -267,8 +270,6 @@ public class Enemy : MonoBehaviour
         {
             anim.Play("EnemyIdle");
         }
-
-        print(clipInfo[0].clip.name);
     }
 
     private void FixedUpdate()
@@ -312,16 +313,21 @@ public class Enemy : MonoBehaviour
 
     public bool CanSeePlayer()
     {
+        if (player == null)
+        {
+            // 玩家对象已被销毁，返回false
+            return false;
+        }
+
         if (Vector2.Distance(transform.position, player.transform.position) <= viewDistance)
         {
             Vector2 direction = (player.transform.position - transform.position).normalized;
             if (Vector2.Angle(transform.right, direction) < viewAngle / 2)
             {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, viewDistance);
-                if (hit.transform != null)
+                if (hit.transform != null && hit.transform == player.transform)
                 {
-                    if (hit.transform.TryGetComponent(out PlayerController player))
-                        return true;
+                    return true;
                 }
             }
         }
@@ -330,6 +336,9 @@ public class Enemy : MonoBehaviour
 
     public void LookAtTarget()
     {
+        if (currentTarget == null)
+            return;
+
         float AngleRad = Mathf.Atan2(currentTarget.position.y - transform.position.y, currentTarget.position.x - transform.position.x);
         float AngleDeg = Mathf.Rad2Deg * AngleRad;
         transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
@@ -367,5 +376,10 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         Destroy(fov.gameObject);
+    }
+    public void PlayerDied()
+    {
+        player = null;
+        state = 0; // 或者设置为其他适合的状态
     }
 }

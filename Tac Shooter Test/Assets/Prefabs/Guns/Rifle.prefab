@@ -122,6 +122,7 @@ MonoBehaviour:
   silencedShootSFX: {fileID: 8300000, guid: f2516c2197909b34e85da538722db812, type: 3}
   reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
   switchSFX: {fileID: 8300000, guid: 1dbe4063bdb55724e9fa0378c70e3926, type: 3}
+  outOfAmmoSFX: {fileID: 8300000, guid: 8984c0777f4d33240b5a12e057b9bfed, type: 3}
   anim: {fileID: 0}
 --- !u!1 &5574597979477398359
 GameObject:

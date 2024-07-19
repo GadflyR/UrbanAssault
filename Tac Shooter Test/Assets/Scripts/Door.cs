@@ -42,5 +42,13 @@ public class Door : MonoBehaviour
         NoiseObject _noise = Instantiate(noisePrefab, transform.position, noisePrefab.transform.rotation).GetComponent<NoiseObject>();
         _noise.maxSize = noise;
         AudioManager.instance.PlaySFX(kickSFX, 1);
+        StartCoroutine(SlowTime());
+    }
+
+    public IEnumerator SlowTime()
+    {
+        Time.timeScale = 0.5f;
+        yield return new WaitForSeconds(1.5f);
+        Time.timeScale = 1;
     }
 }

@@ -146,12 +146,6 @@ public class LoadoutManager : MonoBehaviour
         weaponDisplay.sprite = selectedGun.weaponSprite;
         weaponDisplay.color = Color.white;
 
-        RectTransform rt = weaponDisplay.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.4f, 0.5f);
-        rt.anchorMax = new Vector2(0.4f, 0.5f);
-        rt.sizeDelta = new Vector2(300, 150);
-        rt.anchoredPosition = new Vector2(0, 0);
-
         weaponNameText.text = guns[index].gunName;
         weaponDescriptionText.text = guns[index].GetDescription();
 
@@ -192,12 +186,6 @@ public class LoadoutManager : MonoBehaviour
         weaponDescriptionText.text = gun.description;
         weaponDisplay.sprite = gun.weaponSprite;
         weaponDisplay.color = Color.white;
-
-        RectTransform rt = weaponDisplay.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.4f, 0.5f);
-        rt.anchorMax = new Vector2(0.4f, 0.5f);
-        rt.sizeDelta = new Vector2(300, 150);
-        rt.anchoredPosition = new Vector2(0, 0);
 
         weaponDisplay.gameObject.SetActive(true);
 

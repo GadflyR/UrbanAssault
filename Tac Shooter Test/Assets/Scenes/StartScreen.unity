@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b066f7427903524bb7695a7e2340bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
   voiceLines:
   - {fileID: 8300000, guid: 1cf381cfa3973584c9e7314549bd8d7c, type: 3}
   - {fileID: 8300000, guid: 8f255600d336b8c43b2fa7808ecedebc, type: 3}
@@ -869,15 +870,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8321684843851177552, guid: becbb3ee327f8f548b98fe715547e750, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.922529
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8321684843851177552, guid: becbb3ee327f8f548b98fe715547e750, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4503326
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8321684843851177552, guid: becbb3ee327f8f548b98fe715547e750, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.022561
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8321684843851177552, guid: becbb3ee327f8f548b98fe715547e750, type: 3}
       propertyPath: m_LocalRotation.w

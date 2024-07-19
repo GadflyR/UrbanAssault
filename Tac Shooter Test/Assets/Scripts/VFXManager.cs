@@ -16,11 +16,16 @@ public class VFXManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
     }
 
-    private void Start()
+    private void OnLevelWasLoaded(int level)
     {
         cameraTransform = Camera.main.transform;
     }

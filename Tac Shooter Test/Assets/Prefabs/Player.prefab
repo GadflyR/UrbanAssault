@@ -135,9 +135,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.05, y: -0.05}
+  m_Offset: {x: -0.05, y: -0.1}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.3
 --- !u!50 &8008015034634441822
 Rigidbody2D:
   serializedVersion: 4
@@ -186,7 +186,6 @@ MonoBehaviour:
   maxSpeed: 5
   noisePrefab: {fileID: 5572240739108897972, guid: a313916ff8d9a324cab58843c33cb423, type: 3}
   health: 100
-  healthBar: {fileID: 0}
   doors:
     serializedVersion: 2
     m_Bits: 512
@@ -220,6 +219,8 @@ MonoBehaviour:
   - {fileID: 7963659328324256107, guid: 36139df7d6da5cb43bf208b7e0d18aba, type: 3}
   - {fileID: 7087175252838199749, guid: 82ee1063dfc423f4c8230886c0c67626, type: 3}
   isMoving: 0
+  gameOverUI: {fileID: 0}
+  deathSFX: {fileID: 8300000, guid: 64e41c929c86cee41b2be211313da6b4, type: 3}
 --- !u!114 &8008015034634441819
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -154,4 +154,5 @@ MonoBehaviour:
   silencedShootSFX: {fileID: 8300000, guid: f2516c2197909b34e85da538722db812, type: 3}
   reloadSFX: {fileID: 8300000, guid: 19d3dee4d6734c54a949439069d2ffef, type: 3}
   switchSFX: {fileID: 8300000, guid: e653dd90da677604f8019232fde0d23c, type: 3}
+  outOfAmmoSFX: {fileID: 8300000, guid: 8984c0777f4d33240b5a12e057b9bfed, type: 3}
   anim: {fileID: 0}
