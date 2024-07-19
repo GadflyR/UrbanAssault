@@ -1,0 +1,453 @@
+fileFormatVersion: 2
+guid: e9ff751591ee2444e8536ee1f2d59d50
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyReload_0
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 11
+        width: 44
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5094549, y: 0.49884433}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc46768dbe8b0e04da7cbb4af890156f
+      internalID: 14257194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_1
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 10
+        width: 44
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5111528, y: 0.51533496}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab635120d2a87b94fa753452236f912b
+      internalID: -126684930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_2
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 10
+        width: 43
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5228243, y: 0.51226795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5b6ee15ca2fc1a46b529c008f829d06
+      internalID: -1049313476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_3
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 9
+        width: 44
+        height: 41
+      alignment: 9
+      pivot: {x: 0.53206426, y: 0.52543366}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85fa4087732dd28479c2b8f7a86fe561
+      internalID: -1773731698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_4
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 8
+        width: 43
+        height: 42
+      alignment: 9
+      pivot: {x: 0.52139777, y: 0.53505147}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c44af45699c7f2d48b6edf61d9cd80b4
+      internalID: 2103839864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_5
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 7
+        width: 43
+        height: 43
+      alignment: 9
+      pivot: {x: 0.52139777, y: 0.5456484}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af1eac75cf34284fb92df829a2937b4
+      internalID: 1426624236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_6
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 7
+        width: 44
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5083646, y: 0.54564834}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1718e8101b4d37469ac509d506bc01c
+      internalID: 2051126873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_7
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 8
+        width: 44
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5097587, y: 0.5365119}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c14769c521d2b9489a5f7a87edcb894
+      internalID: 1106762668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_8
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 9
+        width: 44
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5111528, y: 0.5175257}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ab8f5d8d5b2b264aacb21e3ecc57b9b
+      internalID: 1098602481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_9
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 10
+        width: 45
+        height: 41
+      alignment: 9
+      pivot: {x: 0.497956, y: 0.5044881}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f460564be26f814c972828a004a3e0c
+      internalID: -181369008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_10
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 11
+        width: 47
+        height: 40
+      alignment: 9
+      pivot: {x: 0.4791182, y: 0.4907989}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f9d4b409454c0c419769f8af33d0e46
+      internalID: 987029268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_11
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 12
+        width: 44
+        height: 39
+      alignment: 9
+      pivot: {x: 0.50697047, y: 0.4779804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c8dc1e535a7434448bbb5a27bd88b23
+      internalID: -141573865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_12
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 12
+        width: 44
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5097587, y: 0.48741737}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b16c2b9a64769b43bc082a3b8de8838
+      internalID: -858085709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_13
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 12
+        width: 44
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5111528, y: 0.47483477}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4af6293aeb9421408183798fbc64655
+      internalID: -184390057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyReload_14
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 12
+        width: 44
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5097573, y: 0.47640762}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 207be8d6178ef2c4cb710beef38d8f7e
+      internalID: 1305668744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      EnemyReload_0: 14257194
+      EnemyReload_1: -126684930
+      EnemyReload_10: 987029268
+      EnemyReload_11: -141573865
+      EnemyReload_12: -858085709
+      EnemyReload_13: -184390057
+      EnemyReload_14: 1305668744
+      EnemyReload_2: -1049313476
+      EnemyReload_3: -1773731698
+      EnemyReload_4: 2103839864
+      EnemyReload_5: 1426624236
+      EnemyReload_6: 2051126873
+      EnemyReload_7: 1106762668
+      EnemyReload_8: 1098602481
+      EnemyReload_9: -181369008
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

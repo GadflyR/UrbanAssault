@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public enum WeaponType
+    {
+        Primary,
+        Secondary
+    }
+
+    public WeaponType weaponType;
+    public string description;
+    public string gunName;
+    public Sprite weaponSprite;
     public GameObject bulletPrefab;
     public Transform barrelOutPoint;
 
@@ -18,17 +28,19 @@ public class Gun : MonoBehaviour
     public int remainingAmmo;
 
     public float reloadTime;
-    private bool isReloading;
+    public bool isReloading;
 
     public float spread;
 
     public bool isAutomatic;
-
     public bool isShotgun;
     public int shotsFired;
 
     public float noise;
     private bool isSilenced;
+    public GameObject noisePrefab;
+
+    private bool isHeldByPlayer;
 
     public List<Attachment> attachments = new List<Attachment>();
 
@@ -37,11 +49,20 @@ public class Gun : MonoBehaviour
     public AudioClip reloadSFX;
     public AudioClip switchSFX;
 
+    public Animator anim;
     private void Start()
-    { 
-        //Get Attachments
+    {
+        if (UIManager.instance == null)
+        {
+            Debug.LogError("UIManager.instance is not set");
+        }
+
+        if (AudioManager.instance == null)
+        {
+            Debug.LogError("AudioManager.instance is not set");
+        }
+
         attachments.AddRange(GetComponentsInChildren<Attachment>());
-        //Apply attachment modifiers
         foreach (Attachment attachment in attachments)
         {
             if (attachment.noiseModifier < 0)
@@ -55,7 +76,7 @@ public class Gun : MonoBehaviour
             spread += attachment.spreadModifier;
             noise += attachment.noiseModifier;
         }
-        //Clamp values so game doesn't SHIT ITSELF
+
         bulletSpeed = Mathf.Clamp(bulletSpeed, 1, Mathf.Infinity);
         damage = Mathf.Clamp(damage, 1, Mathf.Infinity);
         firerate = Mathf.Clamp(firerate, Mathf.Epsilon, Mathf.Infinity);
@@ -64,11 +85,15 @@ public class Gun : MonoBehaviour
         spread = Mathf.Clamp(spread, 0, Mathf.Infinity);
         noise = Mathf.Clamp(noise, 0, Mathf.Infinity);
 
-        //Initialize cooldown & ammo
         cooldown = firerate;
         ammo = magAmmo;
         remainingAmmo = magAmmo * 5;
+
+        isHeldByPlayer = transform.parent.TryGetComponent(out PlayerController player);
+
+        anim = GetComponentInParent<Animator>();
     }
+
     private void Update()
     {
         //Reloading
@@ -81,6 +106,7 @@ public class Gun : MonoBehaviour
             UIManager.instance.ammoText.text = $"X | {remainingAmmo}";
         else
             UIManager.instance.ammoText.text = $"{ammo} | {remainingAmmo}";
+        
     }
     public void Shoot()
     {
@@ -97,6 +123,12 @@ public class Gun : MonoBehaviour
                 Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
                 bulletRB.velocity = (Vector2)barrelOutPoint.right * bulletSpeed + GenerateRandomSpread();
             }
+            if (isHeldByPlayer)
+            {
+                VFXManager.instance.ShakeCam(0.1f, noise / 10);
+                NoiseObject noiseObj = Instantiate(noisePrefab, transform.position, noisePrefab.transform.rotation).GetComponent<NoiseObject>();
+                noiseObj.maxSize = noise;
+            }
             AudioManager.instance.PlaySFX(isSilenced ? silencedShootSFX : shootSFX, 1);
             cooldown = firerate;
             ammo--;
@@ -110,6 +142,7 @@ public class Gun : MonoBehaviour
     public IEnumerator Reload()
     {
         isReloading = true;
+        
         AudioManager.instance.PlaySFX(reloadSFX, 1);
         if (isShotgun)
         {
@@ -160,5 +193,9 @@ public class Gun : MonoBehaviour
     {
         if (transform.parent.TryGetComponent(out PlayerController player))
             CancelReload();
+    }
+    public string GetDescription()
+    {
+        return description;
     }
 }

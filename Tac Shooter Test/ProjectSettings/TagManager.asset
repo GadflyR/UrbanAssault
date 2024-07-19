@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - AudioManager
+  - Panel
   layers:
   - Default
   - TransparentFX
@@ -21,10 +22,7 @@ TagManager:
   - Object (Walls n shit)
   - Mask (FOV)
   - BehindMask (Enemies n shit)
-  - 
-  - 
-  - 
-  - 
+  - Noise
   - 
   - 
   - 

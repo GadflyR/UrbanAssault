@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour
 {
+    public AudioClip buttonClickSound;
     public void StartNewGame()
     {
-        // 替换 "GameScene" 为你的实际游戏场景名称
-        SceneManager.LoadScene("SampleScene");
+        PlayButtonClickSound();
+        SceneManager.LoadScene("LevelSelection");
+    }
+    private void PlayButtonClickSound()
+    {
+        if (ClickManager.instance != null && buttonClickSound != null)
+        {
+            ClickManager.instance.PlayClickSound(buttonClickSound);
+        }
     }
 }

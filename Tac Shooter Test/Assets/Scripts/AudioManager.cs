@@ -6,20 +6,13 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     private AudioSource source;
-    public AudioClip kickDoorSFX;
 
     void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
         else
-        {
             Destroy(gameObject);
-            Debug.LogWarning("Duplicate AudioManager instance destroyed.");
-        }
     }
 
     void Start()
@@ -37,32 +30,22 @@ public class AudioManager : MonoBehaviour
         source = GetComponent<AudioSource>();
 
         if (source == null)
-        {
             Debug.LogError("AudioSource component not found on AudioManager!");
-        }
     }
 
     public void PlaySFX(AudioClip sound, float volume)
     {
         if (sound != null && source != null)
-        {
             source.PlayOneShot(sound, volume);
-        }
         else
-        {
             Debug.LogError($"AudioClip or AudioSource is missing! AudioClip: {(sound == null ? "null" : sound.name)}, AudioSource: {(source == null ? "null" : "exists")}");
-        }
     }
 
     public void StopPlaying()
     {
         if (source != null)
-        {
             source.Stop();
-        }
         else
-        {
             Debug.LogError("AudioSource component is missing or destroyed!");
-        }
     }
 }

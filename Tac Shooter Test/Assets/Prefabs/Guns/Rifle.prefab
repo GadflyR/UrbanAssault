@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5574597978973919250}
   - component: {fileID: 5574597978973919251}
   - component: {fileID: 5574597978973919260}
-  - component: {fileID: 7702815802289122252}
   m_Layer: 7
   m_Name: Rifle
   m_TagString: Untagged
@@ -27,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574597978973919249}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.2, y: -0.27, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5574597979477398352}
   m_Father: {fileID: 0}
@@ -75,8 +74,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 29f6c2a371ccb754abd775c0e63aec2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,6 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bc8fe5ccb7b154894bae5b7a34b61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponType: 0
+  description: A versatile weapon with good range. Perfect for medium to long distances.
+  gunName: Rifle
+  weaponSprite: {fileID: 21300000, guid: 77e1340b2eb7c83408f99ffc12b95428, type: 3}
   bulletPrefab: {fileID: 5342191919766992949, guid: 877ce21ed23aaa849b5e91dc66d1b83a, type: 3}
   barrelOutPoint: {fileID: 5574597979477398352}
   bulletSpeed: 45
@@ -107,42 +110,19 @@ MonoBehaviour:
   magAmmo: 30
   remainingAmmo: 0
   reloadTime: 1.5
+  isReloading: 0
   spread: 5
   isAutomatic: 1
   isShotgun: 0
   shotsFired: 1
-  noise: 10
+  noise: 12.5
+  noisePrefab: {fileID: 5572240739108897972, guid: a313916ff8d9a324cab58843c33cb423, type: 3}
   attachments: []
   shootSFX: {fileID: 8300000, guid: 6751ded0bc0ad3a4f93dcacc05ff357b, type: 3}
   silencedShootSFX: {fileID: 8300000, guid: f2516c2197909b34e85da538722db812, type: 3}
   reloadSFX: {fileID: 8300000, guid: 3b7321b7f6368f149af4f7f5d372bc93, type: 3}
   switchSFX: {fileID: 8300000, guid: 1dbe4063bdb55724e9fa0378c70e3926, type: 3}
---- !u!61 &7702815802289122252
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5574597978973919249}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  anim: {fileID: 0}
 --- !u!1 &5574597979477398359
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574597979477398359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.65, y: 0.01, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

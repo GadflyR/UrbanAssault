@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7939550230972492595}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.19, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 7939550231542751350}
   - component: {fileID: 7939550231542751351}
   - component: {fileID: 7939550231542751352}
-  - component: {fileID: 5397868926003334846}
   m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
@@ -58,9 +57,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7939550231542751349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.16, y: -0.26, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7939550230972492596}
   m_Father: {fileID: 0}
@@ -106,8 +105,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1740276815, guid: 6c19ff7d1f829eb458fd8fb94c007297, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,6 +129,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bc8fe5ccb7b154894bae5b7a34b61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponType: 1
+  description: A reliable sidearm with moderate damage. Suitable for close to medium
+    range.
+  gunName: Pistol
+  weaponSprite: {fileID: 21300000, guid: 7b6803b391e4e454bb1f0fb03f5e4bed, type: 3}
   bulletPrefab: {fileID: 2477751650605399963, guid: 9fa2b955f8dc7624fa591a247b2cc121, type: 3}
   barrelOutPoint: {fileID: 7939550230972492596}
   bulletSpeed: 30
@@ -138,39 +142,16 @@ MonoBehaviour:
   magAmmo: 12
   remainingAmmo: 0
   reloadTime: 1.5
+  isReloading: 0
   spread: 1
   isAutomatic: 0
   isShotgun: 0
   shotsFired: 1
-  noise: 5
+  noise: 7.5
+  noisePrefab: {fileID: 5572240739108897972, guid: a313916ff8d9a324cab58843c33cb423, type: 3}
   attachments: []
   shootSFX: {fileID: 8300000, guid: 8f074069d5433fd419a40355394173fe, type: 3}
   silencedShootSFX: {fileID: 8300000, guid: f2516c2197909b34e85da538722db812, type: 3}
   reloadSFX: {fileID: 8300000, guid: 19d3dee4d6734c54a949439069d2ffef, type: 3}
   switchSFX: {fileID: 8300000, guid: e653dd90da677604f8019232fde0d23c, type: 3}
---- !u!61 &5397868926003334846
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939550231542751349}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  anim: {fileID: 0}
