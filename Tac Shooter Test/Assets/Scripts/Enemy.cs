@@ -5,6 +5,10 @@ using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
+    private Vector3 lockedPosition;
+    private Quaternion lockedRotation;
+    private bool isLocked = false;
+
     public float maxSpeed = 400;
     public float currentSpeed;
 
@@ -112,163 +116,170 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Current target is not set!");
             return;
         }
-
-        if (CanSeePlayer())
-            angerLevel += Time.deltaTime;
+        if (isLocked)
+        {
+            transform.position = lockedPosition;
+            transform.rotation = lockedRotation;
+        }
         else
-            angerLevel -= Time.deltaTime;
-        angerLevel = Mathf.Clamp(angerLevel, 0, 10);
-
-        if (angerLevel > 0 && angerLevel < angerThreshold)
         {
-            if (state != 3 && CanSeePlayer())
-                source.PlayOneShot(confusedVoiceLines[Random.Range(0, confusedVoiceLines.Length)], 1);
-            state = 3;
-        }
-        else if (angerLevel >= angerThreshold)
-        {
-            if (state != 2)
-            {
-                source.PlayOneShot(angryVoiceLines[Random.Range(0, angryVoiceLines.Length)], 1);
-                angerLevel = 5;
-            }
-            state = 2;
-        }
-        else if (state != 4 && state != 5)
-        {
-            if (state != 0 && state != 1 && !CanSeePlayer())
-                source.PlayOneShot(lostSightVoiceLines[Random.Range(0, lostSightVoiceLines.Length)], 1);
-            if (patrolCheckpoints.Length == 0)
-                state = 0;
-            else
-                state = 1;
-        }
-        angerLevel = Mathf.Clamp(angerLevel, 0, 10);
-
-        // Footsteps
-        if (currentSpeed != 0)
-            footstepInterval = 1 / (currentSpeed / 100);
-        footstepCooldown -= Time.deltaTime;
-        if (footstepCooldown <= 0 && currentSpeed != 0)
-        {
-            source.PlayOneShot(footstepSFXs[Random.Range(0, footstepSFXs.Length)], 1);
-            footstepCooldown = footstepInterval;
-        }
-
-        // State Handling
-        if (state == 0)
-        {
-            currentSpeed = 0;
-            currentTarget = startTransform;
-            if (Vector2.Distance(transform.position, currentTarget.position) < nextWaypointDistance)
-                transform.rotation = startTransform.rotation;
-        }
-        else if (state == 1)
-        {
-            currentSpeed = 100;
-            currentTarget = patrolCheckpoints[currentPatrolCheckpoint];
-
-            if (path != null && currentWaypoint < path.vectorPath.Count)
-            {
-                LookAtTarget();
-            }
-
-            float distance = Vector2.Distance(transform.position, currentTarget.position);
-            if (distance <= nextWaypointDistance)
-            {
-                currentPatrolCheckpoint++;
-                if (currentPatrolCheckpoint >= patrolCheckpoints.Length)
-                    currentPatrolCheckpoint = 0;
-            }
-        }
-        else if (state == 2)
-        {
-            currentSpeed = maxSpeed;
-            currentTarget = player.transform;
-
-            LookAtTarget();
-
             if (CanSeePlayer())
+                angerLevel += Time.deltaTime;
+            else
+                angerLevel -= Time.deltaTime;
+            angerLevel = Mathf.Clamp(angerLevel, 0, 10);
+
+            if (angerLevel > 0 && angerLevel < angerThreshold)
             {
-                RaycastHit2D hit = Physics2D.Linecast(transform.position, player.transform.position);
-                if (hit.transform != null && hit.transform == player.transform)
+                if (state != 3 && CanSeePlayer())
+                    source.PlayOneShot(confusedVoiceLines[Random.Range(0, confusedVoiceLines.Length)], .5f);
+                state = 3;
+            }
+            else if (angerLevel >= angerThreshold)
+            {
+                if (state != 2)
                 {
-                    if (!gun.isReloading)
-                    {
-                        otherAnim = true;
-                        anim.Play("EnemyShoot");
-                        gun.Shoot();
-                        currentSpeed = 0;
-                    }
+                    source.PlayOneShot(angryVoiceLines[Random.Range(0, angryVoiceLines.Length)], .5f);
+                    angerLevel = 5;
                 }
+                state = 2;
             }
-        }
-        else if (state == 3)
-        {
-            currentSpeed = 0;
-            currentTarget = player.transform;
-            if (CanSeePlayer())
-                LookAtTarget();
-        }
-        else if (state == 4)
-        {
-            currentSpeed = 250;
-            LookAtTarget();
-            if (Vector2.Distance(transform.position, currentTarget.position) < nextWaypointDistance)
+            else if (state != 4 && state != 5)
             {
-                state = 5;
-                StartCoroutine(LookAround());
-            }
-        }
-        else if (state == 5)
-        {
-            if (isLookingAround)
-            {
-                float rotation = Mathf.SmoothStep(-90, 90, Mathf.PingPong(Time.time / 2, 1));
-                transform.rotation = Quaternion.Euler(0, 0, rotation);
-            }
-            else
-            {
+                if (state != 0 && state != 1 && !CanSeePlayer())
+                    source.PlayOneShot(lostSightVoiceLines[Random.Range(0, lostSightVoiceLines.Length)], .5f);
                 if (patrolCheckpoints.Length == 0)
                     state = 0;
                 else
                     state = 1;
             }
-        }
+            angerLevel = Mathf.Clamp(angerLevel, 0, 10);
 
-        // Animations
-        clipInfo = anim.GetCurrentAnimatorClipInfo(0);
-
-        if (gun.isReloading)
-        {
-            otherAnim = true;
-            if (gun.isShotgun)
+            // Footsteps
+            if (currentSpeed != 0)
+                footstepInterval = 1 / (currentSpeed / 100);
+            footstepCooldown -= Time.deltaTime;
+            if (footstepCooldown <= 0 && currentSpeed != 0)
             {
-                anim.speed = 1f / 3f * 0.5f / gun.reloadTime;
-                anim.Play("EnemyReloadShotgun");
+                source.PlayOneShot(footstepSFXs[Random.Range(0, footstepSFXs.Length)], 1);
+                footstepCooldown = footstepInterval;
             }
-            else
-            {
-                anim.speed = 0.5f / gun.reloadTime;
-                anim.Play("EnemyReload");
-            }
-        }
 
-        if (clipInfo[0].clip.name != "EnemyMove" || clipInfo[0].clip.name != "EnemyIdle")
-        {
-            if (anim.GetCurrentAnimatorStateInfo(0).length < anim.GetCurrentAnimatorStateInfo(0).normalizedTime)
+            // State Handling
+            if (state == 0)
             {
-                otherAnim = false;
+                currentSpeed = 0;
+                currentTarget = startTransform;
+                if (Vector2.Distance(transform.position, currentTarget.position) < nextWaypointDistance)
+                    transform.rotation = startTransform.rotation;
             }
-        }
+            else if (state == 1)
+            {
+                currentSpeed = 100;
+                currentTarget = patrolCheckpoints[currentPatrolCheckpoint];
 
-        if (rb.velocity != Vector2.zero && otherAnim == false)
-        {
-            anim.Play("EnemyMove");
-        }
-        else if ((rb.velocity == Vector2.zero) && otherAnim == false)
-        {
-            anim.Play("EnemyIdle");
+                if (path != null && currentWaypoint < path.vectorPath.Count)
+                {
+                    LookAtTarget();
+                }
+
+                float distance = Vector2.Distance(transform.position, currentTarget.position);
+                if (distance <= nextWaypointDistance)
+                {
+                    currentPatrolCheckpoint++;
+                    if (currentPatrolCheckpoint >= patrolCheckpoints.Length)
+                        currentPatrolCheckpoint = 0;
+                }
+            }
+            else if (state == 2)
+            {
+                currentSpeed = maxSpeed;
+                currentTarget = player.transform;
+
+                LookAtTarget();
+
+                if (CanSeePlayer())
+                {
+                    RaycastHit2D hit = Physics2D.Linecast(transform.position, player.transform.position);
+                    if (hit.transform != null && hit.transform == player.transform)
+                    {
+                        if (!gun.isReloading)
+                        {
+                            otherAnim = true;
+                            anim.Play("EnemyShoot");
+                            gun.Shoot();
+                            currentSpeed = 0;
+                        }
+                    }
+                }
+            }
+            else if (state == 3)
+            {
+                currentSpeed = 0;
+                currentTarget = player.transform;
+                if (CanSeePlayer())
+                    LookAtTarget();
+            }
+            else if (state == 4)
+            {
+                currentSpeed = 250;
+                LookAtTarget();
+                if (Vector2.Distance(transform.position, currentTarget.position) < nextWaypointDistance)
+                {
+                    state = 5;
+                    StartCoroutine(LookAround());
+                }
+            }
+            else if (state == 5)
+            {
+                if (isLookingAround)
+                {
+                    float rotation = Mathf.SmoothStep(-90, 90, Mathf.PingPong(Time.time / 2, 1));
+                    transform.rotation = Quaternion.Euler(0, 0, rotation);
+                }
+                else
+                {
+                    if (patrolCheckpoints.Length == 0)
+                        state = 0;
+                    else
+                        state = 1;
+                }
+            }
+
+            // Animations
+            clipInfo = anim.GetCurrentAnimatorClipInfo(0);
+
+            if (gun.isReloading)
+            {
+                otherAnim = true;
+                if (gun.isShotgun)
+                {
+                    anim.speed = 1f / 3f * 0.5f / gun.reloadTime;
+                    anim.Play("EnemyReloadShotgun");
+                }
+                else
+                {
+                    anim.speed = 0.5f / gun.reloadTime;
+                    anim.Play("EnemyReload");
+                }
+            }
+
+            if (clipInfo[0].clip.name != "EnemyMove" || clipInfo[0].clip.name != "EnemyIdle")
+            {
+                if (anim.GetCurrentAnimatorStateInfo(0).length < anim.GetCurrentAnimatorStateInfo(0).normalizedTime)
+                {
+                    otherAnim = false;
+                }
+            }
+
+            if (rb.velocity != Vector2.zero && otherAnim == false)
+            {
+                anim.Play("EnemyMove");
+            }
+            else if ((rb.velocity == Vector2.zero) && otherAnim == false)
+            {
+                anim.Play("EnemyIdle");
+            }
         }
     }
 
@@ -350,18 +361,18 @@ public class Enemy : MonoBehaviour
         angerLevel = 10;
         Instantiate(bloods[Random.Range(0, bloods.Length)], transform.position, Quaternion.Euler(0, 0, Random.Range(-180f, 180f)));
         rb.AddForce(-transform.right.normalized * damage / 2, ForceMode2D.Impulse);
-        source.PlayOneShot(hurtSounds[Random.Range(0, hurtSounds.Length)], 1);
+        source.PlayOneShot(hurtSounds[Random.Range(0, hurtSounds.Length)], .5f);
         if (health <= 0)
         {
             Instantiate(enemyDeath, transform.position, transform.rotation);
-            source.PlayOneShot(deathSound);
+            source.PlayOneShot(deathSound, .5f);
             Destroy(gameObject);
         }
     }
 
     public void HearNoise(Transform noiseTransform)
     {
-        source.PlayOneShot(heardNoiseVoiceLines[Random.Range(0, heardNoiseVoiceLines.Length)], 1);
+        source.PlayOneShot(heardNoiseVoiceLines[Random.Range(0, heardNoiseVoiceLines.Length)], .5f);
         state = 4;
         currentTarget = noiseTransform;
     }
@@ -377,9 +388,22 @@ public class Enemy : MonoBehaviour
     {
         Destroy(fov.gameObject);
     }
+
     public void PlayerDied()
     {
         player = null;
         state = 0; // 或者设置为其他适合的状态
+    }
+
+    public void LockPositionAndRotation()
+    {
+        lockedPosition = transform.position;
+        lockedRotation = transform.rotation;
+        isLocked = true;
+    }
+
+    public void UnlockPositionAndRotation()
+    {
+        isLocked = false;
     }
 }

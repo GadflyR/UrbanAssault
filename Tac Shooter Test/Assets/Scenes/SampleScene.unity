@@ -667,7 +667,6 @@ MonoBehaviour:
   maxSpeed: 5
   noisePrefab: {fileID: 5572240739108897972, guid: a313916ff8d9a324cab58843c33cb423, type: 3}
   health: 100
-  healthBar: {fileID: 2130938539}
   doors:
     serializedVersion: 2
     m_Bits: 512
@@ -692,6 +691,7 @@ MonoBehaviour:
   playerDeath: {fileID: 2555686852587500962, guid: 313cd55a034783144ade27ba301c1a5f, type: 3}
   bloods: []
   isMoving: 0
+  deathSFX: {fileID: 0}
 --- !u!114 &551908322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -905,6 +905,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoText: {fileID: 856601545}
+  enemyCounter: {fileID: 0}
+  timerText: {fileID: 0}
+  restartButton: {fileID: 0}
+  backButton: {fileID: 0}
+  UIs: []
 --- !u!1 &599596240
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,6 +2432,12 @@ MonoBehaviour:
   bloods: []
   enemyDeath: {fileID: 0}
   isMoving: 0
+  angryVoiceLines: []
+  confusedVoiceLines: []
+  deathSound: {fileID: 0}
+  hurtSounds: []
+  heardNoiseVoiceLines: []
+  lostSightVoiceLines: []
 --- !u!58 &1559799125
 CircleCollider2D:
   m_ObjectHideFlags: 0

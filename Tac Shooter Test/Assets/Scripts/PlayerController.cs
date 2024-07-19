@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -28,14 +30,18 @@ public class PlayerController : MonoBehaviour
     public GameObject playerDeath;
     public GameObject[] bloods;
 
+    private Vignette vignette;
+
     private Animator anim;
 
     public bool isMoving = false;
     private AnimatorClipInfo[] clipInfo;
     bool otherAnim = false;
 
-    public GameObject gameOverUI; // 游戏结束UI
     public AudioClip deathSFX;
+
+    private Coroutine regenHealthCoroutine;
+    public AudioClip heartbeatSFX;
 
     private void Start()
     {
@@ -48,7 +54,17 @@ public class PlayerController : MonoBehaviour
 
         healthBar.SetHealth(health);
 
-        gameOverUI.SetActive(false); // 确保游戏开始时游戏结束UI是隐藏的
+        Volume volume = FindObjectOfType<Volume>();
+        if (volume != null && volume.profile.TryGet(out Vignette v))
+        {
+            vignette = v;
+        }
+
+        // 初始化Vignette颜色
+        if (vignette != null)
+        {
+            vignette.color.value = Color.black; // 设置为默认颜色（黑色）
+        }
     }
 
     private void Update()
@@ -162,21 +178,25 @@ public class PlayerController : MonoBehaviour
         if (clipInfo[0].clip.name != "Move" || clipInfo[0].clip.name != "Idle")
         {
             if (anim.GetCurrentAnimatorStateInfo(0).length < anim.GetCurrentAnimatorStateInfo(0).normalizedTime)
-            {
                 otherAnim = false;
-            }
         }
 
         if (rb.velocity != Vector2.zero && otherAnim == false)
-        {
             anim.Play("Move");
-        }
         else if ((rb.velocity == Vector2.zero) && otherAnim == false)
-        {
             anim.Play("Idle");
-        }
-    }
 
+        if (vignette != null)
+        {
+            if (health <= 30)
+                vignette.color.value = Color.Lerp(vignette.color.value, Color.red, Mathf.PingPong(Time.time, 1)); // 血量低于30时设置为红色
+            else
+                vignette.color.value = Color.Lerp(vignette.color.value, Color.black, Mathf.PingPong(Time.time, 1)); // 正常状态设置为黑色
+        }
+
+        if (health < 50 && regenHealthCoroutine == null)
+            regenHealthCoroutine = StartCoroutine(RegenHealth());
+    }
 
     public void SwapGun(int index)
     {
@@ -188,9 +208,7 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.PlaySFX(guns[index].switchSFX, 1);
         }
         else
-        {
             Debug.LogError("Gun index out of range");
-        }
     }
 
     public void TakeDamage(float damage)
@@ -205,7 +223,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(playerDeath, transform.position, transform.rotation);
             StopAllAudio(); // 停止所有音频
             NotifyEnemiesOfDeath(); // 通知敌人玩家已死亡
-            gameOverUI.SetActive(true); // 显示游戏结束UI
+            UIManager.instance.SwitchUIs(1); // 显示游戏结束UI
             Debug.Log("GameManager.Instance: " + (GameManager.Instance != null ? "Exists" : "Does not exist"));
             AudioManager.instance.PlaySFX(deathSFX, 1);
             Destroy(gameObject);
@@ -217,9 +235,7 @@ public class PlayerController : MonoBehaviour
     {
         AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
         foreach (AudioSource audioSource in allAudioSources)
-        {
             audioSource.Stop();
-        }
     }
 
     // 新增：通知所有敌人玩家已死亡
@@ -227,13 +243,23 @@ public class PlayerController : MonoBehaviour
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)
-        {
             enemy.PlayerDied();
-        }
     }
 
     private bool IsInTutorialScene()
     {
         return SceneManager.GetActiveScene().name == "Tutorial";
+    }
+
+    private IEnumerator RegenHealth()
+    {
+        while (health < 50)
+        {
+            health += 1;
+            healthBar.SetHealth(health);
+            AudioManager.instance.PlaySFX(heartbeatSFX, 1);
+            yield return new WaitForSeconds(0.5f); // 每0.5秒恢复1点血量
+        }
+        regenHealthCoroutine = null; // 协程结束，重置为null
     }
 }

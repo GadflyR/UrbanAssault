@@ -9,6 +9,7 @@ TagManager:
   - Restart
   - Enemy
   - VictoryPanel
+  - Back
   layers:
   - Default
   - TransparentFX

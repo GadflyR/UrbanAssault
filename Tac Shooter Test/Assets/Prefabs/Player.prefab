@@ -219,8 +219,8 @@ MonoBehaviour:
   - {fileID: 7963659328324256107, guid: 36139df7d6da5cb43bf208b7e0d18aba, type: 3}
   - {fileID: 7087175252838199749, guid: 82ee1063dfc423f4c8230886c0c67626, type: 3}
   isMoving: 0
-  gameOverUI: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: 64e41c929c86cee41b2be211313da6b4, type: 3}
+  heartbeatSFX: {fileID: 8300000, guid: ea951ef77dee1e5409977e401f543e57, type: 3}
 --- !u!114 &8008015034634441819
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7914544399503172205}
   - component: {fileID: 321745606568256526}
   - component: {fileID: 1530747098609066867}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Bloody Footsteps
   m_TagString: Untagged
   m_Icon: {fileID: 0}

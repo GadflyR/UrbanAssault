@@ -86,6 +86,8 @@ public class LoadoutManager : MonoBehaviour
         weaponDisplay.gameObject.SetActive(false);
         weaponDataPanel.SetActive(false);
         startGameButton.interactable = false;
+
+        CheckBestTimesAndUnlockWeapon();
     }
 
     private void PlayButtonClickSound()
@@ -180,6 +182,13 @@ public class LoadoutManager : MonoBehaviour
             return;
         }
 
+        // 检查是否解锁第7把枪（索引为6）
+        if (index == 6 && !IsSeventhGunUnlocked())
+        {
+            // 如果第7把枪未解锁，直接返回，不显示信息
+            return;
+        }
+
         Gun gun = guns[index];
 
         weaponNameText.text = gun.gunName;
@@ -220,5 +229,47 @@ public class LoadoutManager : MonoBehaviour
         noiseText.text = "";
 
         weaponDataPanel.SetActive(false);
+    }
+
+    private void CheckBestTimesAndUnlockWeapon()
+    {
+        float bestTime1 = PlayerPrefs.GetFloat("Level 1 Best Time", -1);
+        float bestTime2 = PlayerPrefs.GetFloat("Level 2 Best Time", -1);
+        float bestTime3 = PlayerPrefs.GetFloat("Level 3 Best Time", -1);
+
+        if (bestTime1 > 0 && bestTime2 > 0 && bestTime3 > 0)
+        {
+            // 启用第7把枪的按钮，并将按钮文本设置为“LMG”
+            if (weaponButtons.Length > 6)
+            {
+                weaponButtons[6].interactable = true;
+                TextMeshProUGUI buttonText = weaponButtons[6].GetComponentInChildren<TextMeshProUGUI>();
+                if (buttonText != null)
+                {
+                    buttonText.text = "LMG";
+                }
+            }
+        }
+        else
+        {
+            // 禁用第7把枪的按钮，并将按钮文本设置为“问号”
+            if (weaponButtons.Length > 6)
+            {
+                weaponButtons[6].interactable = false;
+                TextMeshProUGUI buttonText = weaponButtons[6].GetComponentInChildren<TextMeshProUGUI>();
+                if (buttonText != null)
+                {
+                    buttonText.text = "?";
+                }
+            }
+        }
+    }
+
+    private bool IsSeventhGunUnlocked()
+    {
+        float bestTime1 = PlayerPrefs.GetFloat("Level 1 Best Time", -1);
+        float bestTime2 = PlayerPrefs.GetFloat("Level 2 Best Time", -1);
+        float bestTime3 = PlayerPrefs.GetFloat("Level 3 Best Time", -1);
+        return bestTime1 > 0 && bestTime2 > 0 && bestTime3 > 0;
     }
 }

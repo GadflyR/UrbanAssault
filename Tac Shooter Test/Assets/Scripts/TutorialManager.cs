@@ -25,7 +25,9 @@ public class TutorialManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else
+        {
             Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -48,27 +50,74 @@ public class TutorialManager : MonoBehaviour
                 PlayVoiceLine(5);
                 playedEnemyTwoAndThreeDeathVoiceLine = true;
             }
-            if (!source.isPlaying && greenPanel.activeSelf)
+            if (!isInCutscene && greenPanel.activeSelf)
             {
                 greenPanel.SetActive(false);
             }
         }
         else
+        {
             isInCutscene = false;
+            if (greenPanel != null)
+                greenPanel.SetActive(false);
+        }
     }
 
     public void PlayVoiceLine(int index)
     {
+        isInCutscene = true;
+        LockAllEnemies(); // 锁定所有敌人位置和旋转
         source.PlayOneShot(voiceLines[index]);
         greenPanel.SetActive(true);
+        StartCoroutine(EndCutsceneAfterVoiceLine(voiceLines[index].length)); // 在播放完声音后结束cutscene
     }
 
     private void OnLevelWasLoaded(int level)
     {
         if (level == 3)
         {
+            playedEnemyOneDeathVoiceLine = false;
+            playedEnemyTwoAndThreeDeathVoiceLine = false;
             enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.InstanceID);
             greenPanel = GameObject.FindGameObjectWithTag("Panel");
+        }
+    }
+
+    private void LockAllEnemies()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                enemy.LockPositionAndRotation();
+            }
+        }
+    }
+
+    private void UnlockAllEnemies()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                enemy.UnlockPositionAndRotation();
+            }
+        }
+    }
+
+    private IEnumerator EndCutsceneAfterVoiceLine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        EndCutscene();
+    }
+
+    public void EndCutscene()
+    {
+        isInCutscene = false;
+        UnlockAllEnemies(); // 解锁所有敌人位置和旋转
+        if (greenPanel != null)
+        {
+            greenPanel.SetActive(false);
         }
     }
 }

@@ -19,6 +19,7 @@ public class PlayerWeaponSetup : MonoBehaviour
         {
             // 实例化副武器并将其附加到副武器槽
             Gun secondaryWeapon = Instantiate(weaponManager.selectedSecondaryWeapon, transform);
+            secondaryWeapon.gameObject.SetActive(false);
             // secondaryWeapon.transform.SetParent(secondaryWeaponSlot);
         }
     }
