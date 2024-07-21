@@ -110,9 +110,9 @@ MonoBehaviour:
   firerate: 1
   magAmmo: 6
   remainingAmmo: 0
-  reloadTime: 2
+  reloadTime: 4
   isReloading: 0
-  spread: 0
+  spread: 1
   isAutomatic: 1
   isShotgun: 0
   shotsFired: 1

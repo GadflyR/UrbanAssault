@@ -105,7 +105,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5342191919766992949, guid: 877ce21ed23aaa849b5e91dc66d1b83a, type: 3}
   barrelOutPoint: {fileID: 5574597979477398352}
   bulletSpeed: 45
-  damage: 25
+  damage: 40
   firerate: 0.1
   magAmmo: 30
   remainingAmmo: 0
